@@ -1,26 +1,98 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@source "../components/originkit";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-void: #030508;
+  --color-void-deep: #000000;
+  --color-electric: #2563eb;
+  --color-sky-glow: #38bdf8;
+  --color-amber: #f97316;
+  --color-solar: #fb923c;
+  --color-slate-muted: #94a3b8;
+  --color-slate-meta: #64748b;
+  --color-footer: #ffffff;
+  --color-footer-ink: #0f172a;
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-syne);
+  --font-mono: var(--font-space-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  background: #000000;
+  color: #ffffff;
+  min-height: 100%;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-electric) 70%, transparent);
+  color: #ffffff;
+}
+
+@keyframes marquee-ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.news-marquee-track {
+  animation: marquee-ticker 42s linear infinite;
+}
+
+.footer-marquee-track {
+  animation: marquee-ticker 46s linear infinite;
+}
+
+@keyframes orbital-pulse {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+.globe-orbital-ring {
+  animation: orbital-pulse 7s ease-in-out infinite;
+}
+
+.globe-marker-label {
+  position: absolute;
+  z-index: 20;
+  right: anchor(left);
+  top: anchor(center);
+  translate: -14px -50%;
+  pointer-events: none;
+  white-space: nowrap;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.85);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+@supports not (anchor-name: --cobe-test) {
+  .globe-marker-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .news-marquee-track,
+  .footer-marquee-track,
+  .globe-orbital-ring {
+    animation: none;
+  }
 }
